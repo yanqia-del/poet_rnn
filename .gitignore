@@ -1,0 +1,15 @@
+# Python缓存
+__pycache__/
+*.pyc
+
+# 模型权重文件（大文件，可重新训练生成）
+checkpoints/
+
+# 训练日志（可重新生成）
+*.log
+
+# 预处理缓存
+data/tang.npz
+
+# Claude Code 个人配置
+.claude/
