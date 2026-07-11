@@ -197,6 +197,39 @@ def get_data(config):
         return pad_data, word2idx, idx2word
 
 
+def get_tone_data(config):
+    """生成平仄序列，与 get_data() 的返回一一对应
+    返回值: shape=(诗数, max_len) 的 numpy 数组
+           每个元素: 0=未知, 1=平, 2=仄
+    """
+    import json as _json
+    tone_dict_path = os.path.join(config.data_dir, 'tone_dict.json')
+    if not os.path.exists(tone_dict_path):
+        print(f'平仄字典不存在: {tone_dict_path}')
+        return None
+
+    with open(tone_dict_path, encoding='utf-8') as f:
+        tone_dict = _json.load(f)
+
+    with open(config.data_path, 'r') as fp:
+        poems = fp.read().split('\n')
+
+    all_tones = []
+    for poem in poems:
+        tones = [0]  # SOP→0
+        for c in poem:
+            if c in tone_dict:
+                tones.append(1 if tone_dict[c] == 'ping' else 2)
+            else:
+                tones.append(0)  # 未知/标点→0
+        tones.append(0)  # EOP→0
+        all_tones.append(tones)
+
+    pad_tones = pad_sequences(all_tones, maxlen=config.max_len,
+                              padding='post', truncating='post', value=0)
+    return pad_tones
+
+
 if __name__ == '__main__':
     # 1、读取json文件，提取古诗并简体化，最后存储
     # data = _parseRawData()
