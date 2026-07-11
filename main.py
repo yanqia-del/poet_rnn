@@ -87,10 +87,11 @@ class Trainer:
                 total_loss = total_loss + loss.item()
         return total_loss
 
-    def generate(self, start_words, prefix_words=None):
+    def generate(self, start_words, emotion=None, prefix_words=None):
         """
         给定几个词，根据这几个词接着生成一首完整的诗歌
         start_words：u'春江潮水连海平'
+        emotion: 情感标记 ①②③④⑤⑥（对应悲思喜壮怨闲）
         比如start_words 为 春江潮水连海平，可以生成：
 
         """
@@ -101,6 +102,13 @@ class Trainer:
         input = torch.tensor([self.config.word2idx['SOP']]).view(1, 1).long()
         input = input.to(self.config.device)
         hidden = None
+
+        # 情感标记先行输入，作为生成的情感上下文
+        if emotion:
+            emo_idx = self.config.word2idx.get(emotion)
+            if emo_idx is not None:
+                output, hidden = model(input, hidden)
+                input = input.data.new([emo_idx]).view(1, 1)
 
         if prefix_words:
             for word in prefix_words:
@@ -124,10 +132,11 @@ class Trainer:
                 break
         return results
 
-    def gen_acrostic(self, start_words, prefix_words=None):
+    def gen_acrostic(self, start_words, emotion=None, prefix_words=None):
         """
         生成藏头诗
         start_words : u'深度学习'
+        emotion: 情感标记 ①②③④⑤⑥
         生成：
         深木通中岳，青苔半日脂。
         度山分地险，逆浪到南巴。
@@ -143,6 +152,13 @@ class Trainer:
         index = 0  # 用来指示已经生成了多少句藏头诗
         # 上一个词
         pre_word = 'SOP'
+
+        # 情感标记先行输入
+        if emotion:
+            emo_idx = self.config.word2idx.get(emotion)
+            if emo_idx is not None:
+                output, hidden = model(input, hidden)
+                input = input.data.new([emo_idx]).view(1, 1)
 
         if prefix_words:
             for word in prefix_words:
@@ -218,7 +234,14 @@ if __name__ == '__main__':
             trainer.train(train_loader)
 
     if config.do_predict:
+        # 普通生成
         result = trainer.generate('丽日照残春')
         print("".join(result))
+        # 藏头诗
         result = trainer.gen_acrostic('深度学习')
         print("".join(result))
+        # 情感控制生成（①悲 ②思 ③喜 ④壮 ⑤怨 ⑥闲）
+        result = trainer.generate('丽日照残春', emotion='①')
+        print("(悲)" + "".join(result))
+        result = trainer.generate('丽日照残春', emotion='③')
+        print("(喜)" + "".join(result))
