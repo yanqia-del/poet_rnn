@@ -1,0 +1,45 @@
+{
+  "total_poems": 176682,
+  "by_source": {
+    "ccpc": 121494,
+    "tang": 55188
+  },
+  "by_genre": {
+    "WUJUE": 30508,
+    "QIJUE": 104534,
+    "WULV": 14749,
+    "QILV": 8157,
+    "OTHER": 18734
+  },
+  "by_split": {
+    "train": 147689,
+    "valid": 13497,
+    "test": 15496
+  },
+  "by_quality_flag": {
+    "clean": 175615,
+    "has_placeholder": 880,
+    "too_short": 171,
+    "garbled": 16
+  },
+  "by_high_confidence": {
+    "True": 157871,
+    "False": 18811
+  },
+  "vocab": {
+    "total_chars": 6108516,
+    "unique_chars": 8715,
+    "kept_chars": 6820,
+    "kept_ratio": "78.3%",
+    "mapped_unk_chars": 1895,
+    "mapped_placeholder": 3300
+  },
+  "dedup": {
+    "before": 184877,
+    "after": 176683,
+    "removed": 8194,
+    "test_protected": 634,
+    "valid_protected": 528,
+    "train_dedup": 7032
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "summary": {
+    "before_dedup": 184877,
+    "after_dedup": 176683,
+    "total_removed": 8194
+  },
+  "breakdown": {
+    "ccpc_test_protected": {
+      "count": 634,
+      "description": "CCPC test 中的诗从所有训练和验证来源移除"
+    },
+    "ccpc_valid_protected": {
+      "count": 528,
+      "description": "CCPC valid 中的诗从所有训练来源移除"
+    },
+    "train_internal_dedup": {
+      "count": 7032,
+      "description": "训练集内部重复，只保留一条"
+    }
+  },
+  "after_dedup_by_source": {
+    "tang": 55188,
+    "ccpc": 121495
+  },
+  "note": "去重依据：标准化正文后的纯汉字字符串精确匹配"
+}
