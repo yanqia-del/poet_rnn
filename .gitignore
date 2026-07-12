@@ -13,3 +13,13 @@ data/tang.npz
 
 # Claude Code 个人配置
 .claude/
+
+# 原始数据（大文件，不提交）
+CCPC/
+data/tang/
+
+# 生成的训练数据（可重新运行脚本生成）
+data/processed/
+data/peot.txt
+data/tang.npz
+data/poems_*.jsonl
