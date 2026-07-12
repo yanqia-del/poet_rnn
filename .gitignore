@@ -18,8 +18,7 @@ data/tang.npz
 CCPC/
 data/tang/
 
-# 生成的训练数据（可重新运行脚本生成）
-data/processed/
+# 旧缓存
 data/peot.txt
 data/tang.npz
 data/poems_*.jsonl

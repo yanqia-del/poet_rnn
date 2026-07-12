@@ -230,6 +230,7 @@ def get_tone_data(config):
     return pad_tones
 
 
+
 if __name__ == '__main__':
     # 1、读取json文件，提取古诗并简体化，最后存储
     # data = _parseRawData()
